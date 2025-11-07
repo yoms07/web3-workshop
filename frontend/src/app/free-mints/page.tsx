@@ -21,13 +21,14 @@ import {
  * Steps to complete:
  * 1. Import necessary hooks from wagmi (useAccount, useConnect, useDisconnect, useReadContract, useWriteContract)
  * 2. Import utilities from viem (isAddress, parseUnits, formatUnits)
- * 3. Define the contract ABI and address
- * 4. Read token metadata (decimals, symbol)
- * 5. Query token balance (use refetch() to refresh on button click)
- * 6. Implement wallet connection/disconnection
- * 7. Implement "Use my address" feature
- * 8. Implement balance query handler
- * 9. Implement mint functionality
+ * 3. Import injected connector from wagmi/connectors
+ * 4. Define the contract ABI and address
+ * 5. Read token metadata (decimals, symbol)
+ * 6. Query token balance (use refetch() to refresh on button click)
+ * 7. Implement wallet connection/disconnection
+ * 8. Implement "Use my address" feature
+ * 9. Implement balance query handler
+ * 10. Implement mint functionality
  *
  * Hint: Check the solution file at free-mints-solution/page.tsx for reference
  */
@@ -49,6 +50,9 @@ export default function FreeMintsPage() {
   // Add CONTRACT_ADDRESS and CONTRACT_ABI here
   // The ABI should include: balanceOf, decimals, symbol, mint functions
   // Contract address: You'll get this after deploying the contract
+  // Example:
+  // const CONTRACT_ADDRESS = "0x..." as const;
+  // const CONTRACT_ABI = [ ... ] as const;
 
   // TODO: Step 4 - Read token metadata (decimals, symbol)
   // Use: useReadContract from wagmi
@@ -65,18 +69,22 @@ export default function FreeMintsPage() {
   // Enable the query when address is valid (use isAddress from viem to validate)
   // The query will have a refetch() method you can call to refresh the balance
   // Example:
+  // const isValidBalanceAddress = isAddress(balanceAddress);
   // const balanceQuery = useReadContract({
   //   address: CONTRACT_ADDRESS,
   //   abi: CONTRACT_ABI,
   //   functionName: "balanceOf",
-  //   args: isValidAddress ? [balanceAddress] : undefined,
-  //   query: { enabled: isValidAddress },
+  //   args: isValidBalanceAddress ? [balanceAddress] : undefined,
+  //   query: { enabled: isValidBalanceAddress },
   // });
 
   // TODO: Step 6 - Format balance result
   // Use formatUnits from viem to format the balance
   // Combine with token symbol for display
-  // Use useMemo to derive the formatted result from balanceQuery.data
+  // Example:
+  // const balanceResult = balanceQuery.data
+  //   ? `${formatUnits(balanceQuery.data as bigint, tokenDecimals)} ${tokenSymbol}`
+  //   : "";
 
   // Placeholder values for UI (remove these once you implement the real logic)
   const isConnected = false; // TODO: Replace with actual isConnected from useAccount
@@ -100,7 +108,7 @@ export default function FreeMintsPage() {
     toast.info("Implement wallet disconnection");
   };
 
-  // TODO: Step 9 - Implement "Use my address" handler (optional but helpful)
+  // TODO: Step 9 - Implement "Use my address" handler
   // Fill the balanceAddress input with the connected wallet address
   // Only show this option when wallet is connected
   const handleUseMyAddress = () => {
