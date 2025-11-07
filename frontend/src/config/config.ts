@@ -1,11 +1,10 @@
 import { createConfig, http } from "wagmi";
-import { hoodi, mainnet, sepolia } from "wagmi/chains";
+import { hoodi } from "wagmi/chains";
 
+// Only support hoodi testnet
 export const config = createConfig({
-  chains: [mainnet, sepolia, hoodi],
+  chains: [hoodi],
   transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
     [hoodi.id]: http(),
   },
 });
